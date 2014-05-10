@@ -1,5 +1,7 @@
 package com.luxoft.paveltask.app.service;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.luxoft.paveltask.app.model.entity.GeoName;
@@ -26,6 +28,8 @@ public class GeoNamesService {
 
     static public final String ERR_CONNECTION = "Error connection";
     static public final String ERR_JSON_SCHEME = "Error json scheme";
+
+    static public final String TAG = "GeoNamesService";
 
     static public final String SCHEME = "http";
     static public final String HOST = "api.geonames.org";
@@ -65,7 +69,8 @@ public class GeoNamesService {
         URI uri = buildURI(SCHEME, HOST, CITIES_PATH, citiesParams);
         try {
             String response = hc.execute(new HttpGet(uri), res);
-            System.out.println("RESPONSE: " + response);
+            Log.i(TAG, "Response from service (" + uri.toString() + "): " + response);
+            // Imitation receive data from server
             // response = TEST_REQUEST;
             try {
                 geoNames = parseListGeoNames(response);
@@ -90,7 +95,7 @@ public class GeoNamesService {
     }
 
     protected List<GeoName> parseListGeoNames(String data) throws ServiceException {
-        List<GeoName> geoNames = null;
+        List<GeoName> geoNames;
         try {
             JSONObject root = new JSONObject(data);
             geoNames = createListGeoNames(root.getJSONArray("geonames"));
@@ -114,7 +119,7 @@ public class GeoNamesService {
     }
 
     private GeoName createGeoName(JSONObject data) throws ServiceException {
-        GeoName geoName = null;
+        GeoName geoName;
         try {
             geoName = new Gson().fromJson(data.toString(), GeoName.class);
         } catch (JsonSyntaxException e) {
@@ -124,7 +129,7 @@ public class GeoNamesService {
     }
 
     public Status parseStatus(String data) throws ServiceException {
-        Status status = null;
+        Status status;
         try {
             JSONObject root = new JSONObject(data);
             status = createStatus(root.getJSONObject("status"));
@@ -135,7 +140,7 @@ public class GeoNamesService {
     }
 
     public Status createStatus(JSONObject data) throws ServiceException {
-        Status status = null;
+        Status status;
         try {
             status = new Gson().fromJson(data.toString(), Status.class);
         } catch (JsonSyntaxException e) {
