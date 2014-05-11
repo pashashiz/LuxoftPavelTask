@@ -1,5 +1,9 @@
 package com.luxoft.paveltask.app.service;
 
+/**
+ * Service exception
+ * @author Pavel Pohrebniy
+ */
 public class ServiceException extends Exception {
 
     public ServiceException() {}

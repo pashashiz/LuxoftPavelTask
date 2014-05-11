@@ -11,11 +11,17 @@ import com.luxoft.paveltask.app.model.entity.GeoName;
 
 import java.util.List;
 
-public class GeoNameAdapter extends ArrayAdapter<GeoName> {
+/**
+ * Geo name array adapter
+ */
+public class GeoNameArrayAdapter extends ArrayAdapter<GeoName> {
 
+    /**
+     * Default adapter item layout resource
+     */
     public static final int DEFAULT_RESOURCE = R.layout.geo_name_list_item;
 
-    static class ViewHolder {
+    private static class ViewHolder {
         public TextView name;
         public TextView title;
     }
@@ -24,12 +30,23 @@ public class GeoNameAdapter extends ArrayAdapter<GeoName> {
 
     protected ViewHolder viewHolder;
 
-    public GeoNameAdapter(Context context, int resource, List<GeoName> objects) {
+    /**
+     * Constructor
+     * @param context Application context
+     * @param resource Adapter item layout resource
+     * @param objects Geo names list
+     */
+    public GeoNameArrayAdapter(Context context, int resource, List<GeoName> objects) {
         super(context, resource, objects);
         this.resource = resource;
     }
 
-    public GeoNameAdapter(Context context, List<GeoName> objects) {
+    /**
+     * Constructor with default adapter item layout resource {@link #DEFAULT_RESOURCE}
+     * @param context Application context
+     * @param objects Geo names list
+     */
+    public GeoNameArrayAdapter(Context context, List<GeoName> objects) {
         super(context, DEFAULT_RESOURCE, objects);
         resource = DEFAULT_RESOURCE;
     }

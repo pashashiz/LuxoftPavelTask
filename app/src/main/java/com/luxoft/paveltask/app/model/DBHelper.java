@@ -12,6 +12,10 @@ import com.luxoft.paveltask.app.model.entity.GeoName;
 
 import java.sql.SQLException;
 
+/**
+ * Data base helper (ORM Lite)
+ * @author Pavel Pohrebniy
+ */
 public class DBHelper extends OrmLiteSqliteOpenHelper {
 
     public static final String TAG = "DBHelper";
@@ -21,6 +25,10 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
 
     private Dao<GeoName, String> daoGeoName = null;
 
+    /**
+     * Constructor
+     * @param context Application context
+     */
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -51,6 +59,11 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
         daoGeoName = null;
     }
 
+    /**
+     * Get geo name DAO
+     * @return Geo name DAO
+     * @throws SQLException
+     */
     public Dao<GeoName, String> getDaoGeoName() throws SQLException {
         if (daoGeoName == null)
             daoGeoName = getDao(GeoName.class);

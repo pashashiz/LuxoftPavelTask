@@ -7,10 +7,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Geo name worker
+ * @author Pavel Pohrebniy
+ */
 public class GeoNameWorker {
 
     private Dao<GeoName, String> daoGeoName;
 
+    /**
+     * Constructor
+     */
     public GeoNameWorker() {
         try {
             daoGeoName = DBManager.getInstance().getHelper().getDaoGeoName();
@@ -19,8 +26,12 @@ public class GeoNameWorker {
         }
     }
 
+    /**
+     * Geo all geo names
+     * @return Geo names list
+     */
     public List<GeoName> getGeoNames() {
-        List<GeoName> geoNames = null;
+        List<GeoName> geoNames;
         try {
             geoNames = daoGeoName.queryForAll();
         } catch (SQLException e) {
@@ -29,6 +40,10 @@ public class GeoNameWorker {
         return geoNames;
     }
 
+    /**
+     * Add new geo names
+     * @param geoNames Geo names list
+     */
     public void addGeoNames(List<GeoName> geoNames) {
         for (GeoName geoName: geoNames)
             try {
@@ -38,6 +53,11 @@ public class GeoNameWorker {
             }
     }
 
+    /**
+     * Filter only the new geo names based on present in the database
+     * @param geoNames Input geo names list
+     * @return Filtered geo names list
+     */
     public List<GeoName> getFilteredNewGeoNames(List<GeoName> geoNames) {
         List<GeoName> newGeoNames = new ArrayList<GeoName>();
         List<GeoName> savedGeoNames = getGeoNames();

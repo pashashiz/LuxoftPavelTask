@@ -19,20 +19,29 @@ import com.luxoft.paveltask.app.model.GeoNameWorker;
 import com.luxoft.paveltask.app.model.entity.GeoName;
 import com.luxoft.paveltask.app.service.GeoNamesService;
 import com.luxoft.paveltask.app.service.ServiceException;
-import com.luxoft.paveltask.app.view.adapter.GeoNameAdapter;
+import com.luxoft.paveltask.app.view.adapter.GeoNameArrayAdapter;
 
 import java.util.List;
 
-
+/**
+ * Geo names activity
+ * @author Pavel Pohrebniy
+ */
 public class GeoNamesActivity extends ActionBarActivity {
 
     public static final String TAG = "GeoNamesActivity";
     public static final int ID_MENU_UPDATE = 1;
 
+    /**
+     * On update geo names interface
+     */
     public interface OnUpdateGeoNames {
         public void onUpdateGeoNames(String errorMessage);
     }
 
+    /**
+     * Update geo names task
+     */
     class UpdateGeoNamesTask extends AsyncTask<OnUpdateGeoNames, Void, String> {
 
         OnUpdateGeoNames updateCallback;
@@ -80,7 +89,7 @@ public class GeoNamesActivity extends ActionBarActivity {
         System.out.println("LIST: " + list);
         List<GeoName> geoNames = new GeoNameWorker().getGeoNames();
         Log.i(TAG, "Geo names, on create: " + geoNames);
-        arrayAdapter = new GeoNameAdapter(this, geoNames);
+        arrayAdapter = new GeoNameArrayAdapter(this, geoNames);
         list.setAdapter(arrayAdapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -24,6 +24,10 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service for working with geo names
+ * @author Pavel Pohrebniy
+ */
 public class GeoNamesService {
 
     static public final String ERR_CONNECTION = "Error connection";
@@ -51,16 +55,31 @@ public class GeoNamesService {
 
     private GeoNamesService() {}
 
+    /**
+     * Get service object (singleton)
+     * @return {@link GeoNamesService}
+     */
     public static synchronized GeoNamesService getInstance() {
         if (instance == null)
             instance = new GeoNamesService();
         return instance;
     }
 
+    /**
+     * Get service status, if status == null - no error, otherwise - service has error
+     * @return {@link Status}
+     */
     public Status getStatus() {
         return status;
     }
 
+    /**
+     * Get the geo name cities list
+     * @param citiesParams Params for request (for example: {@link #demoCitiesParams})
+     * @return Returns list, if null - an error occurred on the server,
+     * for identity of error - you can check status {@link #getStatus()}
+     * @throws ServiceException {@link #ERR_CONNECTION}, {@link #ERR_JSON_SCHEME}
+     */
     public List<GeoName> getGeoNameCities(List<NameValuePair> citiesParams) throws ServiceException {
         status = null;
         List<GeoName> geoNames = null;
@@ -94,7 +113,7 @@ public class GeoNamesService {
         return uri;
     }
 
-    protected List<GeoName> parseListGeoNames(String data) throws ServiceException {
+    private List<GeoName> parseListGeoNames(String data) throws ServiceException {
         List<GeoName> geoNames;
         try {
             JSONObject root = new JSONObject(data);
@@ -128,7 +147,7 @@ public class GeoNamesService {
         return geoName;
     }
 
-    public Status parseStatus(String data) throws ServiceException {
+    private Status parseStatus(String data) throws ServiceException {
         Status status;
         try {
             JSONObject root = new JSONObject(data);
@@ -139,7 +158,7 @@ public class GeoNamesService {
         return status;
     }
 
-    public Status createStatus(JSONObject data) throws ServiceException {
+    private Status createStatus(JSONObject data) throws ServiceException {
         Status status;
         try {
             status = new Gson().fromJson(data.toString(), Status.class);
